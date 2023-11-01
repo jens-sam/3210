@@ -54,3 +54,25 @@ int main() {
     free(x);
     return 0;
 }
+
+
+// void fft(double complex *x, int N) {
+//     if (N <= 1) return;
+
+//     double complex even[N/2];
+//     double complex odd[N/2];
+
+//     for (int i = 0; i < N / 2; i++) {
+//         even[i] = x[i * 2];
+//         odd[i] = x[i * 2 + 1];
+//     }
+
+//     fft(even, N / 2);
+//     fft(odd, N / 2);
+
+//     for (int k = 0; k < N / 2; k++) {
+//         double complex t = cexp(-I * M_PI * k / N) * odd[k];
+//         x[k] = even[k] + t;
+//         x[k + N / 2] = even[k] - t;
+//     }
+// }
