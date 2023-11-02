@@ -33,6 +33,8 @@ void fft(complex double* x, int N) {
     free(odd);
 }
 
+
+/// initial run with a random N to make sure function works. needed to change to malloc to account for memory issues on big N
 int main() {
     // Example usage and speed test
     int N = 1024; // Size of the input, ideally a power of two
@@ -54,6 +56,51 @@ int main() {
     free(x);
     return 0;
 }
+
+
+/// clocking the function after using malloc for memory issues
+// int main() {
+//     //test_fft();
+
+//     const int N = 1 << 22;  // 2^22
+//     double complex *x = malloc(N * sizeof(double complex));
+
+//     if (x == NULL) {
+//         printf("Memory allocation failed.\n");
+//         return 1;
+//     }
+
+//     // Initialize x with values for a cosine wave
+//     for (int i = 0; i < N; i++) {
+//         x[i] = cos(M_PI * 0.1 * i);
+//     }
+
+//     // Measure the start time
+//     clock_t start = clock();
+
+//     // Call your FFT function
+//     fft(x, N);
+
+//     // Measure the end time
+//     clock_t end = clock();
+
+//     // Calculate the runtime in seconds
+//     double runtime = (double)(end - start) / CLOCKS_PER_SEC;
+
+//     printf("FFT execution time: %f seconds\n", runtime);
+
+//     // Check if runtime is less than 5 seconds
+//     if (runtime < 5) {
+//         printf("Success: FFT is sufficiently fast.\n");
+//     } else {
+//         printf("Failure: FFT is too slow.\n");
+//     }
+
+//     free(x);
+//     return 0;
+// }
+
+
 
 
 // void fft(double complex *x, int N) {
