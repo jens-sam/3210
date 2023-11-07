@@ -4,6 +4,31 @@
 
 namespace py = pybind11;
 
+/// current not working fft but speed works
+//
+py::array_t<double> fft_wrapper(py::array_t<double> in_real, py::array_t<double> in_imag) {
+    py::buffer_info buf_real = in_real.request(), buf_imag = in_imag.request();
+
+    if (buf_real.size != buf_imag.size) {
+        throw std::runtime_error("Input sizes must match");
+    }
+
+    int N = static_cast<int>(buf_real.size);
+    int N_adjust = 1 << (int)std::ceil(std::log2(N));
+
+    // Create vectors for the output with 2x space for real and imaginary parts
+    std::vector<double> out(2 * N_adjust, 0.0);
+
+    // Call the FFT function
+    fft(static_cast<double *>(buf_real.ptr), static_cast<double *>(buf_imag.ptr), out.data(), out.data() + N_adjust, N);
+
+    // Return the result as a numpy array
+    return py::array_t<double>(out.size(), out.data());
+}
+
+
+
+
 PYBIND11_MODULE(_ece3210_lab07, m) {
     m.def("dft", [](py::array_t<double> in_real, py::array_t<double> in_imag) {
         py::buffer_info buf_real = in_real.request(), buf_imag = in_imag.request();
